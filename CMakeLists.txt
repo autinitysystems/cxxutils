@@ -24,3 +24,12 @@ FILE ( GLOB cxxutils_TESTS test/*.hxx )
 
 CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${cxxutils_TESTS} )
 TARGET_LINK_LIBRARIES ( cxxutils_test cxxutils )
+
+FIND_PACKAGE ( Doxygen )
+IF ( DOXYGEN_FOUND )
+    CONFIGURE_FILE ( Doxyfile.in Doxyfile )
+    ADD_CUSTOM_TARGET ( doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating documentation with Doxygen." VERBATIM
+    )
+ENDIF ()

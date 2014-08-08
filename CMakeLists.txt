@@ -20,5 +20,7 @@ INSTALL ( FILES ${cxxutils_HEADERS} DESTINATION include/cxxutils )
 
 FIND_PACKAGE ( CxxTest REQUIRED )
 
-CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${test_HEADERS} )
+FILE ( GLOB cxxutils_TESTS test/*.hxx )
+
+CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${cxxutils_TESTS} )
 TARGET_LINK_LIBRARIES ( cxxutils_test cxxutils )

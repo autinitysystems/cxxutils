@@ -1,8 +1,8 @@
-#ifndef CXXUTILS_NONE_HXX
-#define CXXUTILS_NONE_HXX
+#ifndef CXXUTILS_DEFCON_HXX
+#define CXXUTILS_DEFCON_HXX
 
 /**
- *  \file none.hxx
+ *  \file defcon.hxx
  *
  *  \brief Utility class to default-construct objects of classes with lengthy names.
  *
@@ -20,7 +20,7 @@ namespace cxxutils
         {
             return Target();
         }
-    } const none; ///< Nice helper to default-construct objects of classes with lengthy names.
+    } const defcon; ///< Nice helper to default-construct objects of classes with lengthy names.
 }
 
-#endif // CXXUTILS_NONE_HXX
+#endif // CXXUTILS_DEFCON_HXX

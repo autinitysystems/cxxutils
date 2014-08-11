@@ -34,6 +34,13 @@ public:
 
     void test_construction()
     {
+        auto construct_once = [](){
+            test::singleton instance;
+            CXXUTILS_UNUSED(instance);
+        };
+
+        TS_ASSERT_THROWS_NOTHING(construct_once());
+
         auto construct_twice = [](){
             test::singleton instance1;
             CXXUTILS_UNUSED(instance1);
@@ -41,6 +48,19 @@ public:
             CXXUTILS_UNUSED(instance2);
         };
 
-        TS_ASSERT_THROWS_EQUALS(construct_twice(), cxxutils::singleton_error const & err, err.what(), std::string("A singleton instance already exists."));
+        TS_ASSERT_THROWS_EQUALS(construct_twice(), cxxutils::singleton_error const & err, err.what(), cxxutils::singleton_error::already_exists);
+    }
+
+    void test_access()
+    {
+        TS_ASSERT_THROWS_EQUALS(test::singleton::instance(), cxxutils::singleton_error const & err, err.what(), cxxutils::singleton_error::access_non_existent);
+        TS_ASSERT_THROWS_NOTHING(test::singleton::instance_ptr());
+        TS_ASSERT_EQUALS(test::singleton::instance_ptr(), nullptr);
+
+        test::singleton instance;
+        CXXUTILS_UNUSED(instance);
+
+        TS_ASSERT_THROWS_NOTHING(test::singleton::instance());
+        TS_ASSERT_DIFFERS(test::singleton::instance_ptr(), nullptr);
     }
 };

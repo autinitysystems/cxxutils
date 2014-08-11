@@ -2,6 +2,9 @@
 
 #include <cxxutils/benchmark.hxx>
 
+#include <thread>
+#include <chrono>
+
 class benchmark_test : public CxxTest::TestSuite
 {
 public:
@@ -15,5 +18,15 @@ public:
         }
 
         TS_ASSERT(callback_has_been_called);
+    }
+
+    void test_accuracy()
+    {
+        CXXUTILS_BENCHMARK([](std::string const &, cxxutils::benchmark::duration_type duration){
+            TS_ASSERT_DELTA(duration, 200000000, 500000);
+        })
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        }
     }
 };

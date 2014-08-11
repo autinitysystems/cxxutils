@@ -63,15 +63,30 @@ namespace cxxutils
     };
 }
 
+
+#define CXXUTILS_BENCHMARK_HELPER(what, callback) if (::cxxutils::benchmark const & bm = ::cxxutils::benchmark(#what, callback))
+/**
+ *  \def CXXUTILS_BENCHMARK_NAME(what, callback)
+ *
+ *  \brief Benchmark the following statement/scope.
+ *
+ *  \param what A descriptive name for the statement/scope being benchmarked.
+ *  \param callback A callable thing (function pointer, functor, lamba expression) which is called after the time has been measured.
+ *
+ *  This macro allows you to benchmark the following statement/scope.
+ *  It is equivalent to calling CXXUTILS_BENCHMARK_NAME with the name of the current function.
+ */
+#define CXXUTILS_BENCHMARK_NAME(what, callback) CXXUTILS_BENCHMARK_HELPER(what, callback)
 /**
  *  \def CXXUTILS_BENCHMARK(callback)
  *
  *  \brief Benchmark the following statement/scope.
  *
+ *  \param callback A callable thing (function pointer, functor, lamba expression) which is called after the time has been measured.
+ *
  *  This macro allows you to benchmark the following statement/scope.
+ *  It is equivalent to calling CXXUTILS_BENCHMARK_NAME with the name of the current function.
  */
-#define CXXUTILS_BENCHMARK_HELPER(what, callback) if (::cxxutils::benchmark const & bm = ::cxxutils::benchmark(#what, callback))
-#define CXXUTILS_BENCHMARK_NAME(what, callback) CXXUTILS_BENCHMARK_HELPER(what, callback)
 #define CXXUTILS_BENCHMARK(callback) CXXUTILS_BENCHMARK_NAME(__func__, callback)
 
 #endif // CXXUTILS_BENCHMARK_HXX

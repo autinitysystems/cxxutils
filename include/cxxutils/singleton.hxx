@@ -47,6 +47,9 @@ namespace cxxutils
      *  \tparam Derived The inheriting class.
      *
      *  \see GoF: Singleton Pattern
+     *
+     *  \warning The singleton pattern is highly criticized and often considered an anti-pattern.
+     *  So only use it when you are absolutely sure about it and use it with care.
      */
     template <typename Derived>
     class singleton

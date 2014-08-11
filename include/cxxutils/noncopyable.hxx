@@ -20,8 +20,10 @@ namespace cxxutils
      *  \note You must use \a private inheritance for this to work.
      *  \note The child class mght still be movable.
      */
-    class noncopyable
+    struct noncopyable
     {
+        noncopyable() = default; ///< Default constructor.
+        virtual ~noncopyable() = default; ///< Default destructor.
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
     };

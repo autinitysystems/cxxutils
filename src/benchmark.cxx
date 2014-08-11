@@ -13,11 +13,16 @@ namespace cxxutils
     benchmark::~benchmark()
     {
         static std::mutex mutex;
+
+        // get the end time before acquiring the lock so the benchmark is not
+        // influenced by the locking overhead
+        auto end = std::chrono::high_resolution_clock::now();
+
         std::lock_guard<std::mutex> lock(mutex);
         CXXUTILS_UNUSED(lock);
 
         callback_(what_,
-            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_).count()
+            std::chrono::duration_cast<std::chrono::nanoseconds>(end - start_).count()
         );
     }
 }

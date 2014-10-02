@@ -11,8 +11,8 @@
  */
 
 // Internal
-#include "noncopyable.hxx"
-#include "macros.hxx"
+#include <cxxutils/noncopyable.hxx>
+#include <cxxutils/macros.hxx>
 
 // Standard library
 #include <stdexcept>
@@ -125,6 +125,8 @@ namespace cxxutils
 
             if (instance_ == nullptr)
                 throw singleton_error(singleton_error::access_non_existent);
+
+            return (*instance_);
         }
 
         /**

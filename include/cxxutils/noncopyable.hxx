@@ -10,6 +10,9 @@
  *  can inherit its noncopyability.
  */
 
+// Internal
+#include <cxxutils/config.hxx>
+
 namespace cxxutils
 {
     /**
@@ -20,6 +23,7 @@ namespace cxxutils
      *  \note You must use \a private inheritance for this to work.
      *  \note The child class mght still be movable.
      */
+#if defined(HAS_CXX11_DEFAULTDELETE)
     struct noncopyable
     {
         noncopyable() = default; ///< Default constructor.
@@ -27,6 +31,17 @@ namespace cxxutils
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
     };
+#else // !HAS_CXX11_DEFAULTDELETE
+    struct noncopyable
+    {
+        noncopyable() {} ///< Default constructor.
+        virtual ~noncopyable() {} ///< Default destructor.
+
+    private:
+        noncopyable(noncopyable const &); ///< The deleted copy constructor.
+        noncopyable & operator = (noncopyable const &); ///< The deleted copy assignment operator.
+    };
+#endif // HAS_CXX11_DEFAULTDELETE
 }
 
 #endif // CXXUTILS_NONCOPYABLE_HXX

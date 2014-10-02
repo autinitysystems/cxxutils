@@ -9,6 +9,9 @@
   This file contains a class that can be used to benchmark the performance of scopes.
  */
 
+// Internal
+#include <cxxutils/config.hxx>
+
 // Standard library
 #include <mutex>
 #include <functional>
@@ -53,8 +56,17 @@ namespace cxxutils
          */
         ~benchmark();
 
+#ifdef HAS_CXX11_EXPLICITCAST
         // used for CXXUTILS_BENCHMARK
         explicit operator bool() const { return true; }
+#else // !HAS_CXX11_EXPLICITCAST
+    private:
+        struct safe_bool_helper {};
+        typedef safe_bool_helper * safe_bool;
+
+    public:
+        operator safe_bool () const { return (safe_bool)1; }
+#endif // HAS_CXX11_EXPLICITCAST
 
     private:
         std::string what_;

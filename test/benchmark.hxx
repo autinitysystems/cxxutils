@@ -23,7 +23,7 @@ public:
     void test_accuracy()
     {
         CXXUTILS_BENCHMARK([](std::string const &, cxxutils::benchmark::duration_type duration){
-            TS_ASSERT_DELTA(duration, 200000000, 1000000);
+            TS_ASSERT_DELTA(duration, 200000000, 10000000);
         })
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(200));

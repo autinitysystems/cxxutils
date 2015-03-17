@@ -4,4 +4,33 @@
 #cmakedefine HAS_CXX11_DEFAULTDELETE
 #cmakedefine HAS_CXX11_EXPLICITCAST
 
+#if defined(_AIX)
+#   define CXXUTILS_AIX
+#elif defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#   define CXXUTILS_BSD
+#elif defined(hpux) || defined(__hpux)
+#   define CXXUTILS_HPUX
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+#   define CXXUTILS_LINUX
+#elif defined(__APPLE__) && defined(__MACH__)
+#   include <TargetConditionals.h>
+#   if TARGET_OS_MAC == 1
+#       define CXXUTILS_OSX
+#   elif (TARGET_OS_IPHONE == 1) || (TARGET_OS_SIMULATOR == 1)
+#       define CXXUTILS_IOS
+#   else
+#       error "Unsupported operating system!"
+#   endif
+#elif defined(__sun) && defined(__SVR4)
+#   define CXXUTILS_SOLARIS
+#elif defined(__CYGWIN__) && !defined(_WIN32)
+#   define CXXUTILS_CYGWIN_POSIX
+#elif defined(__CYGWIN__) && defined(_WIN32)
+#   define CXXUTILS_CYGWIN_WIN32
+#elif defined(_WIN32)
+#   define CXXUTILS_WIN32
+#else
+#   error "Unsupported operating system!"
+#endif
+
 #endif // CXXUTILS_CONFIG_HXX

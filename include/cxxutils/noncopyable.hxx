@@ -21,7 +21,7 @@ namespace cxxutils
      *  A class can inherit from this class to become noncopyable.
      *
      *  \note You must use \a private inheritance for this to work.
-     *  \note The child class mght still be movable.
+     *  \note The child class might still be movable.
      */
 #if defined(HAS_CXX11_DEFAULTDELETE)
     struct noncopyable

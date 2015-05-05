@@ -1,16 +1,19 @@
 PROJECT ( cxxutils )
 CMAKE_MINIMUM_REQUIRED ( VERSION 2.8.11 )
 
+LIST ( APPEND CMAKE_MODULE_PATH
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/cxx11"
+)
+
+INCLUDE ( CheckCxx11 )
+CXX11_REQUIRE_FEATURES (
+    auto
+    lambda
+)
+
 FIND_PACKAGE ( Threads REQUIRED )
-
-ENABLE_TESTING ()
-
-SET ( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" )
-INCLUDE ( EnableCxx11 )
-INCLUDE ( TestCxx11Features )
-
-ENABLE_CXX11 ()
-TEST_CXX11_FEATURES ()
+FIND_PACKAGE ( CxxTest REQUIRED )
 
 CONFIGURE_FILE (
     "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxutils/config.hxx.in"
@@ -23,13 +26,15 @@ FILE ( GLOB cxxutils_SOURCES src/*.cxx )
 INCLUDE_DIRECTORIES ( include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_BINARY_DIR}/include )
 
+ADD_DEFINITIONS ( ${CXX11_DEFINES} )
+
 ADD_LIBRARY ( cxxutils STATIC ${cxxutils_SOURCES} ${cxxutils_HEADERS} )
 TARGET_LINK_LIBRARIES ( cxxutils ${CMAKE_THREAD_LIBS_INIT} )
 
 INSTALL ( TARGETS cxxutils DESTINATION lib )
 INSTALL ( FILES ${cxxutils_HEADERS} "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx" DESTINATION include/cxxutils )
 
-FIND_PACKAGE ( CxxTest REQUIRED )
+ENABLE_TESTING ()
 
 FILE ( GLOB cxxutils_TESTS test/*.hxx )
 

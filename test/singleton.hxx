@@ -28,12 +28,12 @@ class singleton_test : public CxxTest::TestSuite
 public:
     void test_noncopyable()
     {
-#ifdef HAS_CXX11_DEFAULTDELETE
+#ifdef CXX11_FEATURE_DEFAULTDELETE
         TS_ASSERT_EQUALS(std::is_copy_assignable<test::singleton>::value, false);
         TS_ASSERT_EQUALS(std::is_copy_constructible<test::singleton>::value, false);
-#else // !HAS_CXX11_DEFAULTDELETE
+#else // !CXX11_FEATURE_DEFAULTDELETE
         TS_SKIP("noncopyable tests don't work with private functions");
-#endif // HAS_CXX11_DEFAULTDELETE
+#endif // CXX11_FEATURE_DEFAULTDELETE
     }
 
     void test_construction()

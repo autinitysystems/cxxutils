@@ -1,16 +1,24 @@
 #include <cxxtest/TestSuite.h>
 
 #include <cxxutils/meminfo.hxx>
+#include <cxxutils/config.hxx>
 
 class meminfo_test : public CxxTest::TestSuite
 {
 public:
-    void test_functions()
+    void test_physmem()
     {
-        /* if any of these returns 0 this is either an error or the operating system is not supported */
         TS_ASSERT_DIFFERS(cxxutils::meminfo::phys_total(), 0);
         TS_ASSERT_DIFFERS(cxxutils::meminfo::phys_avail(), 0);
+    }
+    
+    void test_virtmem()
+    {
+#if defined(CXXUTILS_WIN32) || defined(CXXUTILS_LINUX)
         TS_ASSERT_DIFFERS(cxxutils::meminfo::virt_total(), 0);
         TS_ASSERT_DIFFERS(cxxutils::meminfo::virt_avail(), 0);
+#else
+        TS_SKIP("Cannot determine virtual memory on platforms other than Windows or Linux.");
+#endif
     }
 };

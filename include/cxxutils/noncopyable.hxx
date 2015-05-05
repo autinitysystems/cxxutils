@@ -11,7 +11,7 @@
  */
 
 // Internal
-#include <cxxutils/config.hxx>
+#include <cxx11_features.hxx>
 
 namespace cxxutils
 {
@@ -23,7 +23,7 @@ namespace cxxutils
      *  \note You must use \a private inheritance for this to work.
      *  \note The child class might still be movable.
      */
-#if defined(HAS_CXX11_DEFAULTDELETE)
+#if defined(CXX11_FEATURE_DEFAULTDELETE)
     struct noncopyable
     {
         noncopyable() = default; ///< Default constructor.
@@ -31,7 +31,7 @@ namespace cxxutils
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
     };
-#else // !HAS_CXX11_DEFAULTDELETE
+#else // !CXX11_FEATURE_DEFAULTDELETE
     struct noncopyable
     {
         noncopyable() {} ///< Default constructor.
@@ -41,7 +41,7 @@ namespace cxxutils
         noncopyable(noncopyable const &); ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &); ///< The deleted copy assignment operator.
     };
-#endif // HAS_CXX11_DEFAULTDELETE
+#endif // CXX11_FEATURE_DEFAULTDELETE
 }
 
 #endif // CXXUTILS_NONCOPYABLE_HXX

@@ -10,7 +10,7 @@
  */
 
 // Internal
-#include <cxxutils/config.hxx>
+#include <cxx11_features.hxx>
 
 // Standard library
 #include <mutex>
@@ -56,17 +56,17 @@ namespace cxxutils
          */
         ~benchmark();
 
-#ifdef HAS_CXX11_EXPLICITCAST
+#ifdef CXX11_FEATURE_EXPLICITCAST
         // used for CXXUTILS_BENCHMARK
         explicit operator bool() const { return true; }
-#else // !HAS_CXX11_EXPLICITCAST
+#else // !CXX11_FEATURE_EXPLICITCAST
     private:
         struct safe_bool_helper {};
         typedef safe_bool_helper * safe_bool;
 
     public:
         operator safe_bool () const { return (safe_bool)1; }
-#endif // HAS_CXX11_EXPLICITCAST
+#endif // CXX11_FEATURE_EXPLICITCAST
 
     private:
         std::string what_;

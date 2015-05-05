@@ -49,6 +49,8 @@ namespace cxxutils
          * This function retrieves the total virtual memory in bytes.
          * 
          * \return The total virtual memory in bytes or 0 if it is not supported.
+         * 
+         * \remarks Currently only supported on Windows and Linux.
          */
         static std::uint64_t virt_total();
         
@@ -58,6 +60,8 @@ namespace cxxutils
          * This function retrieves the available virtual memory in bytes.
          * 
          * \return The available virtual memory in bytes or 0 if it is not supported.
+         * 
+         * \remarks Currently only supported on Windows and Linux.
          */
         static std::uint64_t virt_avail();
     };

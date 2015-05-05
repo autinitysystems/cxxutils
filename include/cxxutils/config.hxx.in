@@ -1,15 +1,9 @@
 #ifndef CXXUTILS_CONFIG_HXX
 #define CXXUTILS_CONFIG_HXX
 
-#cmakedefine HAS_CXX11_DEFAULTDELETE
-#cmakedefine HAS_CXX11_EXPLICITCAST
-
-#if defined(_AIX)
-#   define CXXUTILS_AIX
-#elif defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+// Currently we support BSD, Linux, OSX, iOS and Windows; Cygwin on windows is unsupported
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 #   define CXXUTILS_BSD
-#elif defined(hpux) || defined(__hpux)
-#   define CXXUTILS_HPUX
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 #   define CXXUTILS_LINUX
 #elif defined(__APPLE__) && defined(__MACH__)
@@ -21,13 +15,7 @@
 #   else
 #       error "Unsupported operating system!"
 #   endif
-#elif defined(__sun) && defined(__SVR4)
-#   define CXXUTILS_SOLARIS
-#elif defined(__CYGWIN__) && !defined(_WIN32)
-#   define CXXUTILS_CYGWIN_POSIX
-#elif defined(__CYGWIN__) && defined(_WIN32)
-#   define CXXUTILS_CYGWIN_WIN32
-#elif defined(_WIN32)
+#elif defined(_WIN32) && !(defined(__CYGWIN__) || defined(__CYGWIN32__))
 #   define CXXUTILS_WIN32
 #else
 #   error "Unsupported operating system!"

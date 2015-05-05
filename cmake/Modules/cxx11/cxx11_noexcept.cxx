@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright © 2015, afr-consulting GmbH         *
+ *                                               *
+ * See the file COPYING for copying permissions. *
+ *************************************************/
+
 int foo_does_not_throw() noexcept // specifier
 {
     return 0;

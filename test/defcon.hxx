@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright © 2015, afr-consulting GmbH         *
+ *                                               *
+ * See the file COPYING for copying permissions. *
+ *************************************************/
+
 #include <cxxtest/TestSuite.h>
 
 #include <cxxutils/defcon.hxx>

@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright © 2015, afr-consulting GmbH         *
+ *                                               *
+ * See the file COPYING for copying permissions. *
+ *************************************************/
+
 #ifndef CXXUTILS_MEMINFO_HXX
 #define CXXUTILS_MEMINFO_HXX
 

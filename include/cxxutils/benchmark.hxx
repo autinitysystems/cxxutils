@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright © 2015, afr-consulting GmbH         *
+ *                                               *
+ * See the file COPYING for copying permissions. *
+ *************************************************/
+
 #ifndef CXXUTILS_BENCHMARK_HXX
 #define CXXUTILS_BENCHMARK_HXX
 

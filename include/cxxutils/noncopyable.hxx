@@ -33,7 +33,7 @@ namespace cxxutils
     {
 #if defined(CXX11_FEATURE_DEFAULTDELETE)
         noncopyable() = default; ///< Default constructor.
-        virtual ~noncopyable() = default; ///< Default destructor.
+        virtual ~noncopyable() {}; ///< Default destructor.
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
 #else // !CXX11_FEATURE_DEFAULTDELETE

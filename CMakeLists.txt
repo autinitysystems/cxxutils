@@ -13,7 +13,6 @@ CXX11_REQUIRE_FEATURES (
 )
 
 FIND_PACKAGE ( Threads REQUIRED )
-FIND_PACKAGE ( CxxTest REQUIRED )
 
 CONFIGURE_FILE (
     "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxutils/config.hxx.in"
@@ -34,14 +33,17 @@ TARGET_LINK_LIBRARIES ( cxxutils ${CMAKE_THREAD_LIBS_INIT} )
 INSTALL ( TARGETS cxxutils DESTINATION lib )
 INSTALL ( FILES ${cxxutils_HEADERS} "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx" DESTINATION include/cxxutils )
 
-ENABLE_TESTING ()
-
-FILE ( GLOB cxxutils_TESTS test/*.hxx )
-
-INCLUDE_DIRECTORIES ( ${CXXTEST_INCLUDE_DIRS} )
-
-CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${cxxutils_TESTS} )
-TARGET_LINK_LIBRARIES ( cxxutils_test cxxutils ${CMAKE_THREAD_LIBS_INIT} )
+FIND_PACKAGE ( CxxTest )
+IF ( CXXTEST_FOUND )
+    ENABLE_TESTING ()
+    
+    FILE ( GLOB cxxutils_TESTS test/*.hxx )
+    
+    INCLUDE_DIRECTORIES ( ${CXXTEST_INCLUDE_DIRS} )
+    
+    CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${cxxutils_TESTS} )
+    TARGET_LINK_LIBRARIES ( cxxutils_test cxxutils ${CMAKE_THREAD_LIBS_INIT} )
+ENDIF ()
 
 FIND_PACKAGE ( Doxygen )
 IF ( DOXYGEN_FOUND )

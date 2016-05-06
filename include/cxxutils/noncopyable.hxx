@@ -29,7 +29,7 @@ namespace cxxutils
     struct noncopyable
     {
         noncopyable() = default; ///< Default constructor.
-        virtual ~noncopyable() {}; ///< Default destructor.
+        virtual ~noncopyable() = default; ///< Default destructor.
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
     };

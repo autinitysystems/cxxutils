@@ -70,7 +70,7 @@ namespace cxxutils
 }
 
 
-#define CXXUTILS_BENCHMARK_HELPER(what, callback) if (::cxxutils::benchmark const & bm = ::cxxutils::benchmark(#what, callback))
+#define CXXUTILS_BENCHMARK_HELPER(what, callback) if (::cxxutils::benchmark const & bm = ::cxxutils::benchmark { #what, callback })
 /**
  *  \def CXXUTILS_BENCHMARK_NAME(what, callback)
  *

@@ -10,9 +10,9 @@
 namespace cxxutils
 {
     benchmark::benchmark(const std::string &what, const std::function<void (const std::string &, benchmark::duration_type)> &callback)
-        : what_(what)
-        , callback_(callback)
-        , start_(std::chrono::high_resolution_clock::now())
+        : what_ { what }
+        , callback_ { callback }
+        , start_ { std::chrono::high_resolution_clock::now() }
     {
     }
 
@@ -24,7 +24,7 @@ namespace cxxutils
         // influenced by the locking overhead
         auto end = std::chrono::high_resolution_clock::now();
 
-        std::lock_guard<std::mutex> lock(mutex);
+        std::lock_guard<std::mutex> lock { mutex };
         CXXUTILS_UNUSED(lock);
 
         callback_(what_,

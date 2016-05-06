@@ -1,29 +1,27 @@
-sudo: required
-dist: trusty
+sudo: false
+
 language: cpp
 
-before_install:
-    - wget --no-check-certificate https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz
-    - tar xzf cmake-3.5.2.tar.gz
-    - cd cmake-3.5.2
-    - ./configure
-    - make
-
 install:
-    - sudo make install
-
-before_script:
-    - which cmake
-    - cmake --version
-    - cd ..
+    - wget --no-check-certificate -qO- https://cmake.org/files/v3.1/cmake-3.5.2-Linux-x86_64.tar.gz | tar xvz
 
 compiler:
-    - clang
     - gcc
+
+before_script:
+    - export CC=gcc-5
+    - export CXX=g++-5
 
 script:
     - mkdir -p build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release ..
+    - ../cmake-3.5.2-Linux-x86_64/bin/cmake -DCMAKE_BUILD_TYPE=Release ..
     - make
 
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - gcc-5
+            - g++-5

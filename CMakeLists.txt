@@ -29,6 +29,7 @@ TARGET_COMPILE_FEATURES( cxxutils
         cxx_defaulted_functions
         cxx_deleted_functions
         cxx_explicit_conversions
+        cxx_generalized_initializers
         cxx_lambdas
         cxx_nullptr
         cxx_uniform_initialization

@@ -24,4 +24,13 @@
  */
 #define CXXUTILS_UNUSED(x) ((void)x)
 
+/**
+ *  \def CXXUTILS_WITH(decl)
+ *
+ *  \brief \a decl is a RAII object being destroyed after the following statement/scope.
+ *
+ *  This macro can be used with RAII objects that are only there for their side effects.
+ */
+#define CXXUTILS_WITH(decl) for (bool just_once = true; just_once;) for (decl; just_once; just_once = false)
+
 #endif // CXXUTILS_MACROS_HXX

@@ -7,13 +7,11 @@
 #include <cxxutils/singleton.hxx>
 
 #include <type_traits>
-#include <string>
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-namespace test
-{
+namespace { inline namespace test {
     class singleton
         : public cxxutils::singleton<singleton>
     {
@@ -26,7 +24,7 @@ namespace test
         {
         }
     };
-}
+}}
 
 CXXUTILS_SINGLETON_IMPLEMENTATION(test::singleton)
 

@@ -24,11 +24,7 @@ namespace cxxutils
         // influenced by the locking overhead
         auto end = std::chrono::high_resolution_clock::now();
 
-        std::lock_guard<std::mutex> lock { mutex };
-        CXXUTILS_UNUSED(lock);
-
-        callback_(what_,
-            std::chrono::duration_cast<std::chrono::nanoseconds>(end - start_).count()
-        );
+        CXXUTILS_WITH(std::lock_guard<std::mutex> lock { mutex })
+            callback_(what_, std::chrono::duration_cast<std::chrono::nanoseconds>(end - start_).count());
     }
 }

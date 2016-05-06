@@ -15,6 +15,9 @@
   This file contains a class that can be used to benchmark the performance of scopes.
  */
 
+// Internal
+#include <cxxutils/macros.hxx>
+
 // Standard library
 #include <mutex>
 #include <functional>
@@ -59,9 +62,6 @@ namespace cxxutils
          */
         ~benchmark();
 
-        // used for CXXUTILS_BENCHMARK
-        explicit operator bool() const { return true; }
-
     private:
         std::string what_;
         std::function<void (std::string const &, duration_type)> callback_;
@@ -70,7 +70,7 @@ namespace cxxutils
 }
 
 
-#define CXXUTILS_BENCHMARK_HELPER(what, callback) if (::cxxutils::benchmark const & bm = ::cxxutils::benchmark { #what, callback })
+#define CXXUTILS_BENCHMARK_HELPER(what, callback) CXXUTILS_WITH(::cxxutils::benchmark bm(#what, callback))
 /**
  *  \def CXXUTILS_BENCHMARK_NAME(what, callback)
  *

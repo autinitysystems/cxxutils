@@ -74,13 +74,13 @@ namespace cxxutils
          */
         singleton()
         {
-            std::lock_guard<std::mutex> lock { mutex_ };
-            CXXUTILS_UNUSED(lock);
+            CXXUTILS_WITH(std::lock_guard<std::mutex> lock { mutex_ })
+            {
+                if (instance_ != nullptr)
+                    throw singleton_error { singleton_error::already_exists };
 
-            if (instance_ != nullptr)
-                throw singleton_error { singleton_error::already_exists };
-
-            instance_ = static_cast<Derived *>(this);
+                instance_ = static_cast<Derived *>(this);
+            }
         }
 
         /**
@@ -92,13 +92,13 @@ namespace cxxutils
          */
         virtual ~singleton()
         {
-            std::lock_guard<std::mutex> lock { mutex_ };
-            CXXUTILS_UNUSED(lock);
+            CXXUTILS_WITH(std::lock_guard<std::mutex> lock { mutex_ })
+            {
+                if (instance_ == nullptr)
+                    throw singleton_error { singleton_error::unexpected };
 
-            if (instance_ == nullptr)
-                throw singleton_error { singleton_error::unexpected };
-
-            instance_ = nullptr;
+                instance_ = nullptr;
+            }
         }
 
         /**
@@ -126,13 +126,13 @@ namespace cxxutils
          */
         static derived_type & instance()
         {
-            std::lock_guard<std::mutex> lock { mutex_ };
-            CXXUTILS_UNUSED(lock);
+            CXXUTILS_WITH(std::lock_guard<std::mutex> lock { mutex_ })
+            {
+                if (instance_ == nullptr)
+                    throw singleton_error { singleton_error::access_non_existent };
 
-            if (instance_ == nullptr)
-                throw singleton_error { singleton_error::access_non_existent };
-
-            return (*instance_);
+                return (*instance_);
+            }
         }
 
         /**

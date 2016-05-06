@@ -57,11 +57,12 @@ add_executable(cxxutils_test_app ${test_SOURCES})
 set_target_properties(cxxutils_test_app PROPERTIES OUTPUT_NAME cxxutils_test)
 target_include_directories(cxxutils_test_app PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
 target_link_libraries(cxxutils_test_app cxxutils contrib::gtest contrib::gmock)
+add_test(NAME cxxutils_test COMMAND cxxutils_test_app)
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     configure_file(Doxyfile.in Doxyfile)
-    add_custom_target( doc "${DOXYGEN_EXECUTABLE}" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+    add_custom_target(doc "${DOXYGEN_EXECUTABLE}" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
         COMMENT "Generating documentation with Doxygen." VERBATIM
     )

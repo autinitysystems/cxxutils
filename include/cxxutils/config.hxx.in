@@ -27,4 +27,6 @@
 #   error "Unsupported operating system!"
 #endif
 
+#define CXXUTILS_VERSION "@PROJECT_VERSION@"
+
 #endif // CXXUTILS_CONFIG_HXX

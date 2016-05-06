@@ -1,15 +1,11 @@
-PROJECT ( cxxutils )
-CMAKE_MINIMUM_REQUIRED ( VERSION 2.8.11 )
+CMAKE_MINIMUM_REQUIRED( VERSION 3.5 )
+CMAKE_POLICY(SET CMP0048 NEW)
+CMAKE_POLICY(SET CMP0054 NEW)
+PROJECT ( cxxutils VERSION 0.1.0.0 )
 
 LIST ( APPEND CMAKE_MODULE_PATH
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules"
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/cxx11"
-)
-
-INCLUDE ( CheckCxx11 )
-CXX11_REQUIRE_FEATURES (
-    auto
-    lambda
 )
 
 FIND_PACKAGE ( Threads REQUIRED )
@@ -25,10 +21,18 @@ FILE ( GLOB cxxutils_SOURCES src/*.cxx )
 INCLUDE_DIRECTORIES ( include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_BINARY_DIR}/include )
 
-ADD_DEFINITIONS ( ${CXX11_DEFINES} )
-
 ADD_LIBRARY ( cxxutils STATIC ${cxxutils_SOURCES} ${cxxutils_HEADERS} )
 TARGET_LINK_LIBRARIES ( cxxutils ${CMAKE_THREAD_LIBS_INIT} )
+TARGET_COMPILE_FEATURES( cxxutils
+    PUBLIC
+        cxx_auto_type
+        cxx_defaulted_functions
+        cxx_deleted_functions
+        cxx_explicit_conversions
+        cxx_lambdas
+        cxx_nullptr
+        cxx_uniform_initialization
+)
 
 INSTALL ( TARGETS cxxutils DESTINATION lib )
 INSTALL ( FILES ${cxxutils_HEADERS} "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx" DESTINATION include/cxxutils )

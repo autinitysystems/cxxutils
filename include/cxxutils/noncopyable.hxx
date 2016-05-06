@@ -16,9 +16,6 @@
  *  can inherit its noncopyability.
  */
 
-// Internal
-#include <cxx11_features.hxx>
-
 namespace cxxutils
 {
     /**
@@ -31,19 +28,10 @@ namespace cxxutils
      */
     struct noncopyable
     {
-#if defined(CXX11_FEATURE_DEFAULTDELETE)
         noncopyable() = default; ///< Default constructor.
         virtual ~noncopyable() {}; ///< Default destructor.
         noncopyable(noncopyable const &) = delete; ///< The deleted copy constructor.
         noncopyable & operator = (noncopyable const &) = delete; ///< The deleted copy assignment operator.
-#else // !CXX11_FEATURE_DEFAULTDELETE
-        noncopyable() {} ///< Default constructor.
-        virtual ~noncopyable() {} ///< Default destructor.
-
-    private:
-        noncopyable(noncopyable const &); ///< The deleted copy constructor.
-        noncopyable & operator = (noncopyable const &); ///< The deleted copy assignment operator.
-#endif // CXX11_FEATURE_DEFAULTDELETE
     };
 }
 

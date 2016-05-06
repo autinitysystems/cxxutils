@@ -1,6 +1,6 @@
 var searchData=
 [
   ['noncopyable',['noncopyable',['../structcxxutils_1_1noncopyable.html',1,'cxxutils']]],
-  ['noncopyable',['noncopyable',['../structcxxutils_1_1noncopyable.html#aaea5ab1a17d8d5baac7a099e4362245b',1,'cxxutils::noncopyable']]],
+  ['noncopyable',['noncopyable',['../structcxxutils_1_1noncopyable.html#aa9bd67749692034ca91c017cf4f97108',1,'cxxutils::noncopyable::noncopyable()=default'],['../structcxxutils_1_1noncopyable.html#a966d668542823cdf1632b55be2880597',1,'cxxutils::noncopyable::noncopyable(noncopyable const &amp;)=delete']]],
   ['noncopyable_2ehxx',['noncopyable.hxx',['../noncopyable_8hxx.html',1,'']]]
 ];

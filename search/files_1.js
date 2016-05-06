@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['defcon_2ehxx',['defcon.hxx',['../defcon_8hxx.html',1,'']]]
+  ['macros_2ehxx',['macros.hxx',['../macros_8hxx.html',1,'']]],
+  ['meminfo_2ehxx',['meminfo.hxx',['../meminfo_8hxx.html',1,'']]]
 ];

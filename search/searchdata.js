@@ -3,9 +3,9 @@ var indexSectionsWithContent =
   0: "abcdimnopsuv~",
   1: "bmns",
   2: "c",
-  3: "bdmns",
+  3: "bmns",
   4: "bimnopsv~",
-  5: "adu",
+  5: "au",
   6: "d",
   7: "c"
 };

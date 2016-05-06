@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['noncopyable_2ehxx',['noncopyable.hxx',['../noncopyable_8hxx.html',1,'']]]
+  ['singleton_2ehxx',['singleton.hxx',['../singleton_8hxx.html',1,'']]]
 ];

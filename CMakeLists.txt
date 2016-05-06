@@ -1,29 +1,36 @@
-CMAKE_MINIMUM_REQUIRED( VERSION 3.5 )
-CMAKE_POLICY(SET CMP0048 NEW)
-CMAKE_POLICY(SET CMP0054 NEW)
-PROJECT ( cxxutils VERSION 0.1.0.0 )
+cmake_minimum_required(VERSION 3.5)
+cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0054 NEW)
+project(cxxutils VERSION 0.1.0.0)
 
-LIST ( APPEND CMAKE_MODULE_PATH
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/cxx11"
-)
+find_package(Threads REQUIRED)
+add_subdirectory(contrib)
 
-FIND_PACKAGE ( Threads REQUIRED )
-
-CONFIGURE_FILE (
+configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxutils/config.hxx.in"
     "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx"
 )
 
-FILE ( GLOB cxxutils_HEADERS include/cxxutils/*.hxx )
-FILE ( GLOB cxxutils_SOURCES src/*.cxx )
+set(cxxutils_HEADERS
+    include/cxxutils/benchmark.hxx
+    include/cxxutils/macros.hxx
+    include/cxxutils/meminfo.hxx
+    include/cxxutils/noncopyable.hxx
+    include/cxxutils/singleton.hxx
+)
+set(cxxutils_SOURCES
+    src/benchmark.cxx
+    src/meminfo.cxx
+    src/singleton.cxx
+)
 
-INCLUDE_DIRECTORIES ( include )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_BINARY_DIR}/include )
-
-ADD_LIBRARY ( cxxutils STATIC ${cxxutils_SOURCES} ${cxxutils_HEADERS} )
-TARGET_LINK_LIBRARIES ( cxxutils ${CMAKE_THREAD_LIBS_INIT} )
-TARGET_COMPILE_FEATURES( cxxutils
+add_library(cxxutils STATIC ${cxxutils_SOURCES} ${cxxutils_HEADERS})
+target_include_directories(cxxutils
+    PUBLIC include
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include
+)
+target_link_libraries(cxxutils PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+target_compile_features(cxxutils
     PUBLIC
         cxx_auto_type
         cxx_defaulted_functions
@@ -35,26 +42,27 @@ TARGET_COMPILE_FEATURES( cxxutils
         cxx_uniform_initialization
 )
 
-INSTALL ( TARGETS cxxutils DESTINATION lib )
-INSTALL ( FILES ${cxxutils_HEADERS} "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx" DESTINATION include/cxxutils )
+install(TARGETS cxxutils DESTINATION lib)
+install(FILES ${cxxutils_HEADERS} "${CMAKE_CURRENT_BINARY_DIR}/include/cxxutils/config.hxx" DESTINATION include/cxxutils)
 
-FIND_PACKAGE ( CxxTest )
-IF ( CXXTEST_FOUND )
-    ENABLE_TESTING ()
-    
-    FILE ( GLOB cxxutils_TESTS test/*.hxx )
-    
-    INCLUDE_DIRECTORIES ( ${CXXTEST_INCLUDE_DIRS} )
-    
-    CXXTEST_ADD_TEST ( cxxutils_test cxxutils_test.cxx ${cxxutils_TESTS} )
-    TARGET_LINK_LIBRARIES ( cxxutils_test cxxutils ${CMAKE_THREAD_LIBS_INIT} )
-ENDIF ()
+enable_testing()
+set(test_SOURCES
+    test/main.cxx
+    test/benchmark.cxx
+    test/meminfo.cxx
+    test/noncopyable.cxx
+    test/singleton.cxx
+)
+add_executable(cxxutils_test_app ${test_SOURCES})
+set_target_properties(cxxutils_test_app PROPERTIES OUTPUT_NAME cxxutils_test)
+target_include_directories(cxxutils_test_app PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_link_libraries(cxxutils_test_app cxxutils contrib::gtest contrib::gmock)
 
-FIND_PACKAGE ( Doxygen )
-IF ( DOXYGEN_FOUND )
-    CONFIGURE_FILE ( Doxyfile.in Doxyfile )
-    ADD_CUSTOM_TARGET ( doc "${DOXYGEN_EXECUTABLE}" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    configure_file(Doxyfile.in Doxyfile)
+    add_custom_target( doc "${DOXYGEN_EXECUTABLE}" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
         COMMENT "Generating documentation with Doxygen." VERBATIM
     )
-ENDIF ()
+endif()
